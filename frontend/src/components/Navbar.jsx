@@ -9,6 +9,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [notificationsCount, setNotificationsCount] = useState(0);
+  const [loading, setLoading] = useState(true);  
 
   const getDisplayName = (fullName) => {
     const nameParts = fullName.split(' ');

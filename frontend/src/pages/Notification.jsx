@@ -26,7 +26,7 @@ const groupNotificationsByDate = (notifications) => {
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
-  const [visibleNotifications, setVisibleNotifications] = useState(3); // Giới hạn ban đầu là 7 thông báo
+  const [visibleNotifications, setVisibleNotifications] = useState(7); // Giới hạn ban đầu là 7 thông báo
   const [showAll, setShowAll] = useState(false); // Kiểm tra trạng thái "Xem tất cả"
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
