@@ -1,10 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import EyeIcon from "../assets/eye.svg";
 import EyeOffIcon from "../assets/eye_off.svg";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,9 +24,7 @@ const Login = () => {
     setLoading(true);
 
     const url =
-      state === "Sign Up"
-        ? "http://localhost:5000/register"
-        : "http://localhost:5000/login";
+      state === "Sign Up" ? "http://localhost:5000/patient/create" : "http://localhost:5000/login";
 
     const requestBody = {
       email,
@@ -45,32 +44,27 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        if (state === "Sign Up") {
-          // Registration successful, switch to login
-          setState("Login");
-          toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
-        } else {
-          // Login successful, set user and navigate
-          if (data.user && data.user.token) {
-            setUser(data.user);
-            localStorage.setItem("token", data.user.token);
+        setUser(data.user);
+        localStorage.setItem("token", data.user.token);
 
-            switch (data.user.role) {
-              case "user":
-                navigate("/");
-                break;
-            }
-          } else {
-            toast.error("Không tìm thấy thông tin đăng nhập hợp lệ!");
-          }
+        switch (data.user.role) {
+          case "user":
+            navigate("/");
+            break;
+          case "doctor":
+          case "admin":
+            navigate("/dashboard");
+            break;
+          default:
+            navigate("/");
         }
       } else {
         const errorMessage = data.message || "Đăng nhập thất bại!";
-        toast.error(errorMessage);
+        toast.error(errorMessage); 
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error(`Đã xảy ra lỗi: ${error.message || "Vui lòng thử lại sau."}`);
+      toast.error(`Đã xảy ra lỗi: ${error.message || "Vui lòng thử lại sau."}`); 
     } finally {
       setLoading(false);
     }
@@ -79,7 +73,7 @@ const Login = () => {
   return (
     <>
       <form className="min-h-[80vh] flex items-center" onSubmit={onSubmitHandler}>
-        <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg">
+        <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[320px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg">
           <p className="text-2xl font-semibold">
             {state === "Sign Up" ? "Tạo tài khoản" : "Đăng nhập"}
           </p>
@@ -155,14 +149,20 @@ const Login = () => {
           {state === "Sign Up" ? (
             <p>
               Đã có tài khoản?{" "}
-              <span onClick={() => setState("Login")} className="text-[#00759c] underline cursor-pointer">
+              <span
+                onClick={() => setState("Login")}
+                className="text-primary underline cursor-pointer"
+              >
                 Đăng nhập tại đây
               </span>
             </p>
           ) : (
             <p>
               Tạo một tài khoản mới?{" "}
-              <span onClick={() => setState("Sign Up")} className="text-[#00759c] underline cursor-pointer">
+              <span
+                onClick={() => setState("Sign Up")}
+                className="text-primary underline cursor-pointer"
+              >
                 bấm vào đây
               </span>
             </p>

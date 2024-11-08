@@ -1,7 +1,6 @@
-@import '../node_modules/slick-carousel/slick/slick.css';
-@import '../node_modules/slick-carousel/slick/slick-theme.css';
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap');
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,9 +16,32 @@
 ::-webkit-scrollbar {
     @apply hidden;
 }
-  
+
 @media (max-width: 740px) {
     .active p {
         @apply text-white bg-primary;
     }
+
+    .slick-prev:before,
+    .slick-next:before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .slick-prev:before,
+    .slick-next:before {
+        display: none;
+    }
+}
+
+.slick-prev:before,
+.slick-next:before {
+    font-size: 25px;
+    color: #00759c;
+}
+
+.slick-prev:before{
+    margin-left: -5px;
 }

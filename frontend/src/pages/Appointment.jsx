@@ -137,7 +137,7 @@ const Appointment = () => {
           work_date: selectedSchedule.work_date,
         };
 
-        await axios.post("http://localhost:5000/create-appointment", appointmentData, {
+        await axios.post("http://localhost:5000/appointment/create", appointmentData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
