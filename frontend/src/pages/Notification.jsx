@@ -33,8 +33,8 @@ const NotificationPage = () => {
   const token = user?.token;
 
   if (!token) {
-    navigate("/login");
-    return null;
+    navigate("/account");
+    return;
   }
 
   useEffect(() => {

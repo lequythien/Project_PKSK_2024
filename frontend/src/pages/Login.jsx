@@ -43,19 +43,25 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setUser(data.user);
-        localStorage.setItem("token", data.user.token);
+        if (state === "Sign Up") {
+          // Registration successful, switch to login
+          setState("Login");
+          toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
+        } else {
+          // Login successful, set user and navigate
+          if (data.user && data.user.token) {
+            if (data.user.role === "doctor" || data.user.role === "admin") {
+              toast.error("Bạn không thể đăng nhập với quyền này!");
+            } else {
+              setUser(data.user); 
+              localStorage.setItem("token", data.user.token);
 
-        switch (data.user.role) {
-          case "user":
-            navigate("/");
-            break;
-          case "doctor":
-          case "admin":
-            navigate("/dashboard");
-            break;
-          default:
-            navigate("/");
+              localStorage.setItem("user", JSON.stringify(data.user));
+              navigate("/"); 
+            }
+          } else {
+            toast.error("Không tìm thấy thông tin đăng nhập hợp lệ!");
+          }
         }
       } else {
         const errorMessage = data.message || "Đăng nhập thất bại!";
